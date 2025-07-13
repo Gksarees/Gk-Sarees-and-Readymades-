@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G.K Sarees - A Complete Family Showroom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FFB6C1;
+            --secondary-color: #FFC0CB;
+            --accent-color: #FF69B4;
+            --text-color: #333;
+            --light-bg: #FFF5F7;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+        
+        .title-font {
+            font-family: 'berkshire', slab serif;
+        }
+        
+        .header-space {
+            height: 200px;
+            background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
+                        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='none' stroke='%23FFB6C1' stroke-width='2' d='M30,50 C30,30 50,10 70,30 C90,50 70,90 50,70 C30,50 10,70 30,50 Z'/%3E%3C/svg%3E");
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--accent-color);
+            position: relative;
+        }
+        
+        .header-space::after {
+            content: "Shop Logo Space";
+            color: #999;
+            font-style: italic;
+        }
+        
+        .category-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .flower-decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: white;
+            border-left: 3px solid var(--accent-color);
+            border-bottom: 3px solid var(--accent-color);
+            padding: 20px;
+            z-index: 1000;
+            box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .theme-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            display: inline-block;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .theme-option.active {
+            border: 2px solid black;
+        }
+        
+        .chat-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            display: none;
+        }
+        
+        .chat-header {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-messages {
+            height: 250px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: white;
+        }
+        
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #eee;
+            background-color: white;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+        
+        .chat-input button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        
+        .chat-bubble {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        
+        .user-message {
+            background-color: var(--primary-color);
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .admin-message {
+            background-color: #e9e9e9;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+            font-size: 24px;
+        }
+        
+        .festival-banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .festival-banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='white' stroke-width='2' stroke-dasharray='5,5' /%3E%3C/svg%3E");
+            opacity: 0.2;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        .floating-flower {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        .floating-flower:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .floating-flower:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+        
+        .floating-flower:nth-child(3) {
+            bottom: 15%;
+            left: 15%;
+            animation-delay: 2s;
+        }
+        
+        .floating-flower:nth-child(4) {
+            bottom: 10%;
+            right: 5%;
+            animation-delay: 3s;
+        }
+        
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .slide {
+            min-width: 100%;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+        }
+        
+        .slider-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+        
+        .slider-dot.active {
+            background-color: white;
+        }
+        
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--accent-color);
+            z-index: 10;
+        }
+        
+        .slider-arrow.prev {
+            left: 10px;
+        }
+        
+        .slider-arrow.next {
+            right: 10px;
+        }
+        
+        .new-offer-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .new-offer-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .new-offer-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='none' stroke='%23FFB6C1' stroke-width='1' d='M30,50 C30,30 50,10 70,30 C90,50 70,90 50,70 C30,50 10,70 30,50 Z'/%3E%3C/svg%3E");
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .close-offer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--accent-color);
+        }
+        
+        .floral-border {
+            position: relative;
+        }
+        
+        .floral-border::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            z-index: -1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 100 100'%3E%3Cpath fill='%23FFB6C1' fill-opacity='0.3' d='M50,0 C60,30 70,40 100,50 C70,60 60,70 50,100 C40,70 30,60 0,50 C30,40 40,30 50,0 Z' /%3E%3C/svg%3E");
+            background-position: top left, top right, bottom left, bottom right;
+            background-repeat: no-repeat;
+            background-size: 40px;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Flowers -->
+    <div class="floating-flower">
+        <svg width="50" height="50" viewBox="0 0 100 100">
+            <path fill="#FFB6C1" d="M50,0 C60,30 70,40 100,50 C70,60 60,70 50,100 C40,70 30,60 0,50 C30,40 40,30 50,0 Z" />
+            <circle cx="50" cy="50" r="10" fill="#FF69B4" />
+        </svg>
+    </div>
+    <div class="floating-flower">
+        <svg width="40" height="40" viewBox="0 0 100 100">
+            <path fill="#FFC0CB" d="M50,0 C60,30 70,40 100,50 C70,60 60,70 50,100 C40,70 30,60 0,50 C30,40 40,30 50,0 Z" />
+            <circle cx="50" cy="50" r="10" fill="#FF69B4" />
+        </svg>
+    </div>
+    <div class="floating-flower">
+        <svg width="60" height="60" viewBox="0 0 100 100">
+            <path fill="#FFD1DC" d="M50,0 C60,30 70,40 100,50 C70,60 60,70 50,100 C40,70 30,60 0,50 C30,40 40,30 50,0 Z" />
+            <circle cx="50" cy="50" r="10" fill="#FF69B4" />
+        </svg>
+    </div>
+    <div class="floating-flower">
+        <svg width="45" height="45" viewBox="0 0 100 100">
+            <path fill="#FFB6C1" d="M50,0 C60,30 70,40 100,50 C70,60 60,70 50,100 C40,70 30,60 0,50 C30,40 40,30 50,0 Z" />
+            <circle cx="50" cy="50" r="10" fill="#FF69B4" />
+        </svg>
+    </div>
+
+    <!-- Header Space for Shop Logo -->
+    <div class="header-space" id="logo-space">
+        <!-- Shop logo will be placed here -->
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <h1 class="text-3xl font-bold text-pink-500 title-font">G.K Sarees</h1>
+                    <span class="ml-2 text-sm bg-pink-100 text-pink-800 px-2 py-1 rounded">Offline Store</span>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="text-gray-700 hover:text-pink-500 transition">Home</a>
+                    <a href="#categories" class="text-gray-700 hover:text-pink-500 transition">Categories</a>
+                    <a href="#special-offers" class="text-gray-700 hover:text-pink-500 transition">Special Offers</a>
+                    <a href="#contact" class="text-gray-700 hover:text-pink-500 transition">Contact Us</a>
+                    <button id="admin-login-btn" class="text-gray-700 hover:text-pink-500 transition">Admin</button>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden py-4">
+                <a href="#home" class="block py-2 text-gray-700 hover:text-pink-500 transition">Home</a>
+                <a href="#categories" class="block py-2 text-gray-700 hover:text-pink-500 transition">Categories</a>
+                <a href="#special-offers" class="block py-2 text-gray-700 hover:text-pink-500 transition">Special Offers</a>
+                <a href="#contact" class="block py-2 text-gray-700 hover:text-pink-500 transition">Contact Us</a>
+                <button id="admin-login-btn-mobile" class="block py-2 text-gray-700 hover:text-pink-500 transition">Admin</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Image Slider -->
+        <section id="home" class="mb-10">
+            <div class="slider-container">
+                <div class="slider" id="main-slider">
+                    <div class="slide" id="slide-1">
+                        <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+                            <rect width="800" height="400" fill="#FFE4E1" />
+                            <path d="M0,200 Q200,100 400,200 Q600,300 800,200" fill="#FFB6C1" fill-opacity="0.3" stroke="#FF69B4" stroke-width="2" />
+                            <path d="M0,300 Q200,200 400,300 Q600,400 800,300" fill="#FF69B4" fill-opacity="0.2" stroke="#FF69B4" stroke-width="1" />
+                            <g transform="translate(400, 200)">
+                                <path fill="#FF69B4" fill-opacity="0.2" d="M0,-50 C10,-30 30,-10 50,0 C30,10 10,30 0,50 C-10,30 -30,10 -50,0 C-30,-10 -10,-30 0,-50 Z" />
+                                <path fill="#FF69B4" fill-opacity="0.3" d="M0,-30 C6,-18 18,-6 30,0 C18,6 6,18 0,30 C-6,18 -18,6 -30,0 C-18,-6 -6,-18 0,-30 Z" />
+                            </g>
+                        </svg>
+                        <div class="slide-content">
+                            <h2 class="text-2xl font-bold mb-2">Festival Collection</h2>
+                            <p>Discover our exclusive sarees for this festive season</p>
+                        </div>
+                    </div>
+                    <div class="slide" id="slide-2">
+                        <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+                            <rect width="800" height="400" fill="#F0F8FF" />
+                            <path d="M0,100 Q200,200 400,100 Q600,0 800,100" fill="#FFB6C1" fill-opacity="0.2" stroke="#FF69B4" stroke-width="2" />
+                            <path d="M0,300 Q200,200 400,300 Q600,400 800,300" fill="#FF69B4" fill-opacity="0.2" stroke="#FF69B4" stroke-width="1" />
+                            <g transform="translate(200, 200)">
+                                <path fill="#FF69B4" fill-opacity="0.2" d="M0,-50 C10,-30 30,-10 50,0 C30,10 10,30 0,50 C-10,30 -30,10 -50,0 C-30,-10 -10,-30 0,-50 Z" />
+                            </g>
+                            <g transform="translate(600, 200)">
+                                <path fill="#FF69B4" fill-opacity="0.2" d="M0,-50 C10,-30 30,-10 50,0 C30,10 10,30 0,50 C-10,30 -30,10 -50,0 C-30,-10 -10,-30 0,-50 Z" />
+                            </g>
+                        </svg>
+                        <div class="slide-content">
+                            <h2 class="text-2xl font-bold mb-2">Elegant Silk Sarees</h2>
+                            <p>Premium quality silk sarees for special occasions</p>
+                        </div>
+                    </div>
+                    <div class="slide" id="slide-3">
+                        <svg class="w-full h-full" viewBox="0 0 800 400" preserveAspectRatio="none">
+                            <rect width="800" height="400" fill="#FFF0F5" />
+                            <path d="M0,200 C200,150 600,250 800,200" fill="#FFB6C1" fill-opacity="0.3" stroke="#FF69B4" stroke-width="2" />
+                            <path d="M0,250 C200,200 600,300 800,250" fill="#FF69B4" fill-opacity="0.2" stroke="#FF69B4" stroke-width="1" />
+                            <g transform="translate(200, 100)">
+                                <path fill="#FF69B4" fill-opacity="0.2" d="M0,-30 C6,-18 18,-6 30,0 C18,6 6,18 0,30 C-6,18 -18,6 -30,0 C-18,-6 -6,-18 0,-30 Z" />
